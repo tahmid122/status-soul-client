@@ -1,12 +1,45 @@
-# React + Vite
+# 🎉 Status Soul 🎉
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+## 🔑 Purpose
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Live Demo
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+[Netlify Live Link](https://m9-assignment09-event-explorer.netlify.app/)
+
+[Firebase Live Link](https://m9-assignment09-auth.web.app/)
+
+---
+
+## 📢 Key Features
+
+- **Authentication**
+- **Login and Registration Functionality**
+  - _Email,Password Login and registration_
+  - _Google Login and registration_
+- **Private Routes**
+- **Dynamic Title**
+- **Dynamic Routing**
+- **Awesome Design**
+- **Beautiful Animation**
+- **Error Handling**
+
+## 🛠️ Packages
+
+- **[React Router](https://reactrouter.com/)**
+- **[React Icons](https://react-icons.github.io/react-icons/)**
+- **[Swiper.js](https://swiperjs.com/)**
+- **[AOS](https://michalsnik.github.io/aos/)**
+- **[Firebase](https://firebase.google.com/)**
+- **[ldrs](https://uiball.com/ldrs/)**
+- **[sweetalert2](https://sweetalert2.github.io/)**
+- **[React hot toast](https://react-hot-toast.com/)**
+
+## 📝Author
+
+- Name: **Tahmid Alam**
+- GitHub: [@tahmid122](www.github.com/tahmid122)
+- Email: <mdtahmidalam122@gmail.com>
