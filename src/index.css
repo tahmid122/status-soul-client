@@ -1,6 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "tailwindcss";
 @plugin "daisyui";
 
+* {
+  font-family: "Roboto", sans-serif;
+}
 @layer utilities {
   /*extra classes */
+  .btn-style {
+    @apply text-white  bg-gradient-to-tl from-black to-red-500 hover:from-red-500 hover:to-black;
+  }
 }
