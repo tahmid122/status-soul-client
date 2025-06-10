@@ -11,4 +11,10 @@
   .btn-style {
     @apply text-white  bg-gradient-to-tl from-black to-red-500 hover:from-red-500 hover:to-black;
   }
+  .proNav li .active {
+    border-bottom: 3px solid red;
+    color: red;
+    font-weight: bold;
+    position: relative;
+  }
 }

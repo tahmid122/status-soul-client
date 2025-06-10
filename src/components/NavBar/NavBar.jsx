@@ -140,9 +140,11 @@ const NavBar = () => {
                     </h5>
                   </div>
                 </div>
-                <button className="btn-style w-full py-2 px-1 font-bold rounded-md mt-2 text-xs cursor-pointer">
-                  View Profile
-                </button>
+                <Link to={"/profile"}>
+                  <button className="btn-style w-full py-2 px-1 font-bold rounded-md mt-2 text-xs cursor-pointer">
+                    View Profile
+                  </button>
+                </Link>
               </div>
               <ul className="text-base font-semibold text-slate-600 mt-2 space-y-2">
                 <Link to={"/"} className="flex items-center gap-1">
