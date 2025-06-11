@@ -158,6 +158,21 @@ const EditProfile = () => {
               </div>
             </div>
           </div>
+          <div className="flex-1">
+            <label className="text-slate-900 text-sm font-medium mb-2 block">
+              Description
+            </label>
+            <div className="relative flex items-center">
+              <textarea
+                name="description"
+                type="text"
+                defaultValue={dbUser?.description}
+                required
+                className="w-full text-slate-900 text-sm border border-slate-300 px-4 py-3 pr-8 rounded-md outline-blue-600"
+                placeholder="Enter your description"
+              />
+            </div>
+          </div>
           <button className="btn btn-style">Update</button>
         </form>
       </div>

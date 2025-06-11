@@ -1,24 +1,22 @@
 import React from "react";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import useAuth from "../../../hooks/useAuth";
 
 const About = () => {
+  const { dbUser } = useAuth();
+
   return (
     <div className="bg-white rounded-md p-4">
       <h1 className="font-bold text-xl">Profile Info</h1>
       <div className="border border-slate-300 rounded p-3 mt-3">
         <h3 className="font-bold text-base">Overview</h3>
-        <p>
-          He moonlights difficult engrossed it, sportsmen. Interested has all
-          Devonshire difficulty gay assistance joy. Handsome met debating sir
-          dwelling age material. As style lived he worse dried. Offered related
-          so visitors we private removed. Moderate do subjects to distance.
-        </p>
+        <p>{dbUser?.description}</p>
       </div>
       <div className="mt-3 grid grid-cols-2 gap-4">
         <div className="flex items-center justify-between py-3 px-4 border border-slate-300 rounded-md">
           <div className="text-base flex items-center justify-center gap-2">
             <span>🗓️ Born: </span>
-            <span className="font-semibold">April 4, 2005</span>
+            <span className="font-semibold">{dbUser?.dob}</span>
           </div>
           <div>
             <button className="cursor-pointer">
@@ -29,7 +27,7 @@ const About = () => {
         <div className="flex items-center justify-between py-3 px-4 border border-slate-300 rounded-md">
           <div className="text-base flex items-center justify-center gap-2">
             <span>♥️ Status: </span>
-            <span className="font-semibold">Married</span>
+            <span className="font-semibold">{dbUser?.status}</span>
           </div>
           <div>
             <button className="cursor-pointer">
@@ -40,7 +38,7 @@ const About = () => {
         <div className="flex items-center justify-between py-3 px-4 border border-slate-300 rounded-md">
           <div className="text-base flex items-center justify-center gap-2">
             <span>💼 Work: </span>
-            <span className="font-semibold">Lead Developer</span>
+            <span className="font-semibold">{dbUser?.role}</span>
           </div>
           <div>
             <button className="cursor-pointer">
@@ -51,7 +49,7 @@ const About = () => {
         <div className="flex items-center justify-between py-3 px-4 border border-slate-300 rounded-md">
           <div className="text-base flex items-center justify-center gap-2">
             <span>🏠 Lives In: </span>
-            <span className="font-semibold">New York, USA</span>
+            <span className="font-semibold">{dbUser?.location}</span>
           </div>
           <div>
             <button className="cursor-pointer">
@@ -73,7 +71,7 @@ const About = () => {
         <div className="flex items-center justify-between py-3 px-4 border border-slate-300 rounded-md">
           <div className="text-base flex items-center justify-center gap-2">
             <span>📩 Email: </span>
-            <span className="font-semibold">tahmid@gmail.com</span>
+            <span className="font-semibold">{dbUser?.email}</span>
           </div>
           <div>
             <button className="cursor-pointer">

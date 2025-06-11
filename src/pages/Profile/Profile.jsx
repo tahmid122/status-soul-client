@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";

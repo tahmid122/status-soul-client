@@ -1,13 +1,16 @@
 import React from "react";
+import useAuth from "../../../hooks/useAuth";
 
 const Posts = () => {
+  const { dbUser } = useAuth();
+
   return (
     <div>
       <div className="bg-white rounded-md p-4">
         <div className="flex items-center gap-5">
           <img
             className="h-10 w-10 object-cover rounded-full"
-            src="https://stackbros.in/social/assets/images/avatar/07.jpg"
+            src={dbUser?.proImage}
             alt=""
           />
           <input
@@ -53,11 +56,11 @@ const Posts = () => {
             <div className="flex items-start gap-3">
               <img
                 className="h-12 w-12 object-cover rounded-full"
-                src="https://stackbros.in/social/assets/images/avatar/07.jpg"
+                src={dbUser?.proImage}
                 alt=""
               />
               <div className="leading-0">
-                <h5 className="font-bold text-base">Sam Lanson</h5>
+                <h5 className="font-bold text-base">{dbUser?.name}</h5>
                 <span className="text-sm ">Public</span>
               </div>
             </div>
