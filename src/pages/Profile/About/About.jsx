@@ -3,7 +3,7 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 
 const About = () => {
   return (
-    <div>
+    <div className="bg-white rounded-md p-4">
       <h1 className="font-bold text-xl">Profile Info</h1>
       <div className="border border-slate-300 rounded p-3 mt-3">
         <h3 className="font-bold text-base">Overview</h3>

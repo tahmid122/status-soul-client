@@ -7,6 +7,7 @@ import PrivateRoute from "../routes/PrivateRoute";
 import Error from "../pages/Error/Error";
 import Profile from "../pages/Profile/Profile";
 import About from "../pages/Profile/About/About";
+import Posts from "../pages/Profile/Posts/Posts";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -30,7 +31,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "posts",
-            element: "Posts",
+            Component: Posts,
           },
           {
             path: "about",

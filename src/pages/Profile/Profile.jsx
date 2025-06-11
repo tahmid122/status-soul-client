@@ -84,7 +84,7 @@ const Profile = () => {
               </ul>
             </div>
           </div>
-          <div className="mt-5 bg-white rounded-md p-4">
+          <div className="mt-5">
             <Outlet />
           </div>
         </div>
