@@ -9,25 +9,18 @@ const Home = () => {
   return (
     <div className="lg:w-10/12 mx-auto p-2 lg:p-0">
       <div className="grid grid-cols-12 gap-6 mt-5">
-        <div className="col-span-3 bg-white rounded-t-md overflow-hidden mb-5 rounded-md shadow cursor-pointer max-h-[80vh]">
-          <img
-            className="h-15 w-full"
-            src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt=""
-          />
+        <div className="col-span-3 bg-white rounded-t-md overflow-hidden mb-5 rounded-md shadow cursor-pointer max-h-[100vh] overflow-y-auto">
+          <img className="h-15 w-full" src={dbUser?.coverImage} alt="" />
           <div>
             <img
               className="w-20 h-20 border-4 border-white rounded-md mx-auto -translate-y-5"
-              src="https://stackbros.in/social/assets/images/avatar/07.jpg"
+              src={dbUser?.proImage}
               alt=""
             />
             <div className="text-center px-5">
               <h5 className="font-bold text-xl">{dbUser?.name}</h5>
-              <p className="text-sm">Web Developer at StackBros</p>
-              <p className="mt-2">
-                I'd love to change the world, but they won’t give me the source
-                code.
-              </p>
+              <p className="text-sm">{dbUser?.role}</p>
+              <p className="mt-2">{dbUser?.description}</p>
             </div>
           </div>
           <div className="px-2">
@@ -72,7 +65,7 @@ const Home = () => {
             <div className="flex items-center gap-5">
               <img
                 className="h-10 w-10 object-cover rounded-full"
-                src="https://stackbros.in/social/assets/images/avatar/07.jpg"
+                src={dbUser?.proImage}
                 alt=""
               />
               <input
@@ -181,11 +174,11 @@ const Home = () => {
             <div className="flex items-start gap-3">
               <img
                 className="h-12 w-12 object-cover rounded-full"
-                src="https://stackbros.in/social/assets/images/avatar/07.jpg"
+                src={dbUser?.proImage}
                 alt=""
               />
               <div className="leading-0">
-                <h5 className="font-bold text-base">Sam Lanson</h5>
+                <h5 className="font-bold text-base">{dbUser?.name}</h5>
                 <span className="text-sm ">Public</span>
               </div>
             </div>
