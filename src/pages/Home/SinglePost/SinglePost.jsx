@@ -1,38 +1,26 @@
 import React from "react";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 
-const SinglePost = () => {
+const SinglePost = ({ post }) => {
   return (
     <div className="bg-white rounded-md p-5">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <img
-            className="h-14 w-14 rounded-full"
-            src="https://stackbros.in/social/assets/images/avatar/04.jpg"
-            alt=""
-          />
+          <img className="h-14 w-14 rounded-full" src={post.proImage} alt="" />
           <div className="leading-2">
             <div className="flex items-center gap-2">
-              <h5 className="font-bold text-base">Judy Nguyen</h5>{" "}
-              <span>. 2hr</span>
+              <h5 className="font-bold text-base">{post.name}</h5>{" "}
+              <span className="text-sm">. {post.postedAt.split("T")[0]}</span>
             </div>
-            <small className="text-sm">Web Developer</small>
+            <small className="text-sm">{post.role}</small>
           </div>
         </div>
         <button className="cursor-pointer">
           <HiOutlineDotsHorizontal size={18} />
         </button>
       </div>
-      <div>
-        <p className="my-3">
-          I'm thrilled to share that I've completed a graduate certificate
-          course in project management with the president's honor roll.
-        </p>
-        <img
-          className="rounded-md h-[300px] object-cover"
-          src="https://stackbros.in/social/assets/images/post/3by2/01.jpg"
-          alt=""
-        />
+      <div className="w-full h-auto py-5 flex items-center justify-center text-center text-xl">
+        <p className="my-3">{post.message}</p>
       </div>
       <div className="flex items-center gap-3 mt-5">
         <span className="text-base font-semibold btn border-none bg-white hover:bg-gray-100">
@@ -42,7 +30,7 @@ const SinglePost = () => {
           💬Comments (12)
         </span>
       </div>
-      <div className="mt-5 w-full space-y-5">
+      {/* <div className="mt-5 w-full space-y-5">
         <div className="flex items-start gap-3 w-full">
           <img
             className="h-10 w-10 rounded-full"
@@ -94,7 +82,7 @@ const SinglePost = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,9 +1,44 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { getFormData } from "../../../utils/getFormData";
+import toast from "react-hot-toast";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import SinglePost from "../../Home/SinglePost/SinglePost";
 
 const Posts = () => {
-  const { dbUser } = useAuth();
-
+  const { dbUser, user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const [posts, setPosts] = useState([]);
+  const buttonRef = useRef();
+  const handlePost = (e) => {
+    e.preventDefault();
+    const data = getFormData(e.target);
+    data.email = dbUser.email;
+    data.name = dbUser.name;
+    data.proImage = dbUser.proImage;
+    data.role = dbUser.role;
+    data.postedAt = new Date();
+    axiosSecure
+      .post(`/posts?email=${user.email}`, data)
+      .then((res) => {
+        buttonRef.current.click();
+        if (res.data) {
+          setPosts(res.data.reverse());
+          toast.success("Successfully Posted");
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+  useEffect(() => {
+    axiosSecure
+      .get(`/user-posts?email=${user.email}`)
+      .then((res) => {
+        if (res.data) {
+          setPosts(res.data.reverse());
+        }
+      })
+      .catch((error) => console.log(error));
+  }, [axiosSecure, user]);
   return (
     <div>
       <div className="bg-white rounded-md p-4">
@@ -41,6 +76,11 @@ const Posts = () => {
           </button>
         </div>
       </div>
+      <div className="mt-5 space-y-5">
+        {posts.map((post) => (
+          <SinglePost key={post._id} post={post} />
+        ))}
+      </div>
       {/* modal */}
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box p-0">
@@ -49,10 +89,12 @@ const Posts = () => {
             className="flex items-center justify-between p-5"
           >
             <h3 className="font-bold text-lg">Create Post</h3>
-            <button className="btn btn-sm btn-circle btn-ghost">✕</button>
+            <button ref={buttonRef} className="btn btn-sm btn-circle btn-ghost">
+              ✕
+            </button>
           </form>
           <hr className="mb-5 text-slate-300 w-full" />
-          <form className="px-5 pb-5">
+          <form onSubmit={handlePost} className="px-5 pb-5">
             <div className="flex items-start gap-3">
               <img
                 className="h-12 w-12 object-cover rounded-full"
@@ -66,6 +108,7 @@ const Posts = () => {
             </div>
             <textarea
               name="message"
+              required
               className="w-full mt-3 py-3 outline-none border-none"
               placeholder="Share your thoughts.."
             ></textarea>
@@ -81,7 +124,9 @@ const Posts = () => {
               </span>
             </div>
             <div className="text-right">
-              <button className="btn btn-style">POST</button>
+              <button type="submit" className="btn btn-style">
+                POST
+              </button>
             </div>
           </form>
         </div>

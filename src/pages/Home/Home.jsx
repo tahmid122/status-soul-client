@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { FiPlus } from "react-icons/fi";
 import SinglePost from "./SinglePost/SinglePost";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 const Home = () => {
   const { dbUser } = useAuth();
-
+  const axiosSecure = useAxiosSecure();
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    axiosSecure
+      .get("/posts")
+      .then((res) => {
+        if (res.data) {
+          setPosts(res.data.reverse());
+        }
+      })
+      .catch((error) => console.log(error));
+  }, [axiosSecure]);
   return (
     <div className="lg:w-10/12 mx-auto p-2 lg:p-0">
       <div className="grid grid-cols-12 gap-6 mt-5">
@@ -99,8 +111,9 @@ const Home = () => {
             </div>
           </div>
           <div className="mt-5 space-y-5">
-            <SinglePost />
-            <SinglePost />
+            {posts?.map((post) => (
+              <SinglePost key={post._id} post={post} />
+            ))}
           </div>
         </div>
         <div className="col-span-3 rounded-md">
