@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsCalendar2Date } from "react-icons/bs";
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
@@ -8,34 +8,35 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { IoBagSharp } from "react-icons/io5";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaRegCalendarPlus } from "react-icons/fa6";
-import { NavLink, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
+import useAuth from "../../hooks/useAuth";
 const Profile = () => {
+  const { dbUser } = useAuth();
+
   return (
     <div className="lg:w-10/12 mx-auto p-2 gap-6">
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-8">
           <div className="rounded-md bg-white overflow-hidden">
             <div className="w-full h-[250px] object-cover">
-              <img
-                className="w-full h-full"
-                src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt=""
-              />
+              <img className="w-full h-full" src={dbUser?.coverImage} alt="" />
             </div>
             <div className="flex items-center justify-between px-4 -translate-y-8">
               <div className="flex items-center gap-3">
                 <img
                   className="h-[120px] w-[120px]  rounded-full border-4 border-white"
-                  src="https://stackbros.in/social/assets/images/avatar/07.jpg"
+                  src={dbUser?.proImage}
                   alt=""
                 />
                 <div>
-                  <h4 className="font-bold text-xl">Sam Lanson</h4>
+                  <h4 className="font-bold text-xl">{dbUser?.name}</h4>
                   <p className="text-[15px]">250 connections</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <button className="btn btn-style">Edit profile</button>
+                <Link to={"/profile/editProfile"}>
+                  <button className="btn btn-style">Edit profile</button>
+                </Link>
                 <button className="flex items-center justify-center btn bg-gray-100 border-none outline-none font-bold">
                   <HiOutlineDotsHorizontal size={18} />
                 </button>
@@ -47,13 +48,13 @@ const Profile = () => {
                   <span className="flex items-center justify-center">
                     <IoBagSharp size={24} />
                   </span>
-                  <span className="text-base">Lead Developer</span>
+                  <span className="text-base">{dbUser?.role}</span>
                 </li>
                 <li className="flex items-center gap-1 text-slate-600">
                   <span className="flex items-center justify-center">
                     <IoLocationOutline size={24} />
                   </span>
-                  <span className="text-base">New York</span>
+                  <span className="text-base">{dbUser?.location}</span>
                 </li>
                 <li className="flex items-center gap-1 text-slate-600">
                   <span className="flex items-center justify-center">

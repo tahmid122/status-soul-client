@@ -2,7 +2,10 @@ import React from "react";
 import { Link } from "react-router";
 import { FiPlus } from "react-icons/fi";
 import SinglePost from "./SinglePost/SinglePost";
+import useAuth from "../../hooks/useAuth";
 const Home = () => {
+  const { dbUser } = useAuth();
+
   return (
     <div className="lg:w-10/12 mx-auto p-2 lg:p-0">
       <div className="grid grid-cols-12 gap-6 mt-5">
@@ -19,7 +22,7 @@ const Home = () => {
               alt=""
             />
             <div className="text-center px-5">
-              <h5 className="font-bold text-xl">Sam Lanson</h5>
+              <h5 className="font-bold text-xl">{dbUser?.name}</h5>
               <p className="text-sm">Web Developer at StackBros</p>
               <p className="mt-2">
                 I'd love to change the world, but they won’t give me the source

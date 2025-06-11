@@ -7,7 +7,10 @@ import { IoMdSunny } from "react-icons/io";
 import { BsMoonStars } from "react-icons/bs";
 import { FaBell } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 const NavBar = () => {
+  const { logOut, dbUser } = useAuth();
   const links = (
     <>
       <li>
@@ -19,6 +22,11 @@ const NavBar = () => {
       </li>
     </>
   );
+  const handleLogOut = () => {
+    logOut()
+      .then(() => toast.success("Successfully Logout"))
+      .catch((error) => console.log(error));
+  };
   return (
     <div className="bg-white shadow-sm">
       <div className="navbar lg:w-10/12 mx-auto">
@@ -117,9 +125,9 @@ const NavBar = () => {
           <div className="dropdown dropdown-end">
             <div tabIndex={0} className="m-1">
               <img
-                className="h-10 w-10 rounded-full cursor-pointer"
-                src="https://scontent.fdac24-4.fna.fbcdn.net/v/t39.30808-1/500122910_1650461958935719_5075836331050539975_n.jpg?stp=c0.195.960.960a_dst-jpg_s200x200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeFXNZNIM3bWnYc05LlT3GqLnucVhnxZllue5xWGfFmWWyTSpBA58EFjZ1BDuq38wGm8MYuupJN5_VtBH2rZy4Lf&_nc_ohc=zL1sTUUMZbAQ7kNvwHRRPOl&_nc_oc=AdkqQe6dWHv2YMtgJgVcKXT2uM_2CUs1F_U2-02Xw5zCvDKut-nSVB-ce480IxNU87s&_nc_zt=24&_nc_ht=scontent.fdac24-4.fna&_nc_gid=xpXWDz797X4lo7VmVp1dJw&oh=00_AfO_fE6NAHuwlSFOfcSYKhqqwjKDSJmDkn9R53M_KKYQhA&oe=684CEA36"
-                alt="profile"
+                className="h-10 w-10 rounded-full cursor-pointer border-2 border-red-600"
+                src={dbUser?.proImage}
+                alt=""
               />
             </div>
             <div
@@ -129,12 +137,12 @@ const NavBar = () => {
               <div>
                 <div className="flex items-center gap-2">
                   <img
-                    className="h-12 w-12 rounded-lg cursor-pointer"
-                    src="https://scontent.fdac24-4.fna.fbcdn.net/v/t39.30808-1/500122910_1650461958935719_5075836331050539975_n.jpg?stp=c0.195.960.960a_dst-jpg_s200x200_tt6&_nc_cat=104&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeFXNZNIM3bWnYc05LlT3GqLnucVhnxZllue5xWGfFmWWyTSpBA58EFjZ1BDuq38wGm8MYuupJN5_VtBH2rZy4Lf&_nc_ohc=zL1sTUUMZbAQ7kNvwHRRPOl&_nc_oc=AdkqQe6dWHv2YMtgJgVcKXT2uM_2CUs1F_U2-02Xw5zCvDKut-nSVB-ce480IxNU87s&_nc_zt=24&_nc_ht=scontent.fdac24-4.fna&_nc_gid=xpXWDz797X4lo7VmVp1dJw&oh=00_AfO_fE6NAHuwlSFOfcSYKhqqwjKDSJmDkn9R53M_KKYQhA&oe=684CEA36"
-                    alt="profile"
+                    className="h-12 w-12 rounded-lg cursor-pointer border-2 border-red-600"
+                    src={dbUser?.proImage}
+                    alt=""
                   />
                   <div>
-                    <h4 className="text-xl font-bold">Tahmid Alam</h4>
+                    <h4 className="text-xl font-bold">{dbUser?.name}</h4>
                     <h5 className="text-sm font-medium text-slate-600">
                       Web Developer
                     </h5>
@@ -162,7 +170,9 @@ const NavBar = () => {
                     className="text-slate-600 block ml-0.5"
                     size={19}
                   />
-                  <li className="my-1">Sign Out</li>
+                  <li className="my-1" onClick={handleLogOut}>
+                    Sign Out
+                  </li>
                 </Link>
                 <hr className="mb-2 text-slate-300" />
               </ul>

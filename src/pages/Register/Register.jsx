@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router";
 import { getFormData } from "../../utils/getFormData";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const Register = () => {
   const [isTrue, setIsTrue] = useState(false);
@@ -11,11 +12,21 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = getFormData(e.target);
+    // eslint-disable-next-line no-unused-vars
+    const { password, ...newUser } = data;
     createUser(data.email, data.password)
       .then((result) => {
         if (result.user) {
-          toast.success("Registration Successful");
-          navigate("/");
+          axios
+            .post("http://localhost:3000/users", newUser)
+            .then((res) => {
+              console.log(res.data);
+              if (res.data.insertedId) {
+                toast.success("Registration Successful");
+                navigate("/");
+              }
+            })
+            .catch((error) => console.log(error));
         } else {
           toast.error("Something went wrong");
         }

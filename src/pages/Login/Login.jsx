@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { getFormData } from "../../utils/getFormData";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 
 const Login = () => {
   const [isTrue, setIsTrue] = useState(false);
+  const navigate = useNavigate();
   const { loginUser } = useAuth();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,6 +15,7 @@ const Login = () => {
       .then((result) => {
         if (result.user) {
           toast.success("Successfully login");
+          navigate("/");
         } else {
           toast.error("Something went wrong");
         }

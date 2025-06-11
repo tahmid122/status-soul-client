@@ -8,6 +8,7 @@ import Error from "../pages/Error/Error";
 import Profile from "../pages/Profile/Profile";
 import About from "../pages/Profile/About/About";
 import Posts from "../pages/Profile/Posts/Posts";
+import EditProfile from "../pages/EditProfile/EditProfile";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
           {
             path: "about",
             Component: About,
+          },
+          {
+            path: "editProfile",
+            Component: EditProfile,
           },
         ],
       },
