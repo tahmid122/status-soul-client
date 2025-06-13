@@ -3,9 +3,12 @@ import { useState } from "react";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import { getFormData } from "../../../utils/getFormData";
+import { FaTrash } from "react-icons/fa6";
 const SinglePost = ({ post, handleDelete }) => {
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
+  const { user, dbUser } = useAuth();
+  const [comments, setComments] = useState(post?.comments);
   const [like, setLike] = useState(post?.likedBy.length);
   const [isLiked, setIsLiked] = useState(post?.likedBy.includes(user.email));
   const handleUpdate = () => {
@@ -25,6 +28,38 @@ const SinglePost = ({ post, handleDelete }) => {
       })
       .catch((error) => console.log(error));
   };
+  const handleComment = (e, id) => {
+    console.log(id);
+    e.preventDefault();
+    const data = getFormData(e.target);
+    data.name = dbUser?.name;
+    data.proImage = dbUser?.proImage;
+    data.id = new Date().getTime() + id;
+    data.postId = post._id;
+    axiosSecure
+      .patch(`/posts/comment?email=${user.email}&id=${id}`, data)
+      .then((res) => {
+        if (res.data.modifiedCount) {
+          setComments((prev) => [...prev, data]);
+          e.target.reset();
+        }
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
+  const handleDeleteComment = (id) => {
+    console.log(id);
+    axiosSecure
+      .delete(`/posts/comment?email=${user.email}&id=${id}&postId=${post._id}`)
+      .then((res) => {
+        if (res.data.modifiedCount) {
+          const filteredData = comments.filter((comment) => comment.id !== id);
+          setComments(filteredData);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+  console.log(comments);
   return (
     <div className="bg-white rounded-md p-5">
       <div className="flex items-center justify-between">
@@ -63,62 +98,55 @@ const SinglePost = ({ post, handleDelete }) => {
           👍{isLiked ? "Liked" : "Like"} ({like})
         </span>
         <span className="text-base font-semibold btn border-none bg-white hover:bg-gray-100">
-          💬Comments ({post.comments.length})
+          💬Comments ({comments.length})
         </span>
       </div>
-      {/* <div className="mt-5 w-full space-y-5">
+      {/* comments */}
+      <div className="mt-5 w-full space-y-5">
         <div className="flex items-start gap-3 w-full">
           <img
             className="h-10 w-10 rounded-full"
-            src="https://stackbros.in/social/assets/images/avatar/12.jpg"
+            src={dbUser?.proImage}
             alt=""
           />
           <div className="w-full relative">
-            <textarea
-              name="comment"
-              className="outline-none border border-slate-300 rounded-md w-full resize p-2 h-auto"
-              placeholder="Add comments.."
-            ></textarea>
-            <button className="btn btn-style absolute top-3 right-3">
-              Post
-            </button>
+            <form onSubmit={(e) => handleComment(e, post?._id)}>
+              <textarea
+                name="comment"
+                className="outline-none border border-slate-300 rounded-md w-full resize p-2 h-auto pr-10"
+                placeholder="Add comments.."
+              ></textarea>
+              <button className="btn btn-style absolute top-3 right-3">
+                Post
+              </button>
+            </form>
           </div>
         </div>
-        <div className="space-y-5">
-          <div className="flex items-start gap-5">
-            <img
-              className="h-10 w-10 rounded-full"
-              src="https://stackbros.in/social/assets/images/avatar/12.jpg"
-              alt=""
-            />
-            <div className="px-5 py-3 rounded-tl-none bg-gray-200 rounded-md">
-              <h3 className="text-lg font-bold">Eve Paul</h3>
-              <p className="text-sm mt-1">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Expedita, ad nesciunt! Earum dolore debitis ipsam! Velit ad
-                provident laudantium voluptatem doloribus accusamus officiis
-                consequatur asperiores incidunt, vel minus, itaque adipisci!
-              </p>
-            </div>
-          </div>
-          <div className="flex items-start gap-5">
-            <img
-              className="h-10 w-10 rounded-full"
-              src="https://stackbros.in/social/assets/images/avatar/12.jpg"
-              alt=""
-            />
-            <div className="px-5 py-3 rounded-tl-none bg-gray-200 rounded-md">
-              <h3 className="text-lg font-bold">Eve Paul</h3>
-              <p className="text-sm mt-1">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Expedita, ad nesciunt! Earum dolore debitis ipsam! Velit ad
-                provident laudantium voluptatem doloribus accusamus officiis
-                consequatur asperiores incidunt, vel minus, itaque adipisci!
-              </p>
-            </div>
-          </div>
+        <div className="space-y-2">
+          {comments &&
+            comments.map((comment) => (
+              <div key={comment?.id} className="flex items-start gap-2">
+                <img
+                  className="h-10 w-10 rounded-full"
+                  src={comment?.proImage}
+                  alt=""
+                />
+                <div className="pl-5 pr-2 py-1 rounded-tl-none bg-gray-200 rounded-md">
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="text-base font-bold">{comment?.name}</h3>
+                    <button
+                      onClick={() => handleDeleteComment(comment?.id)}
+                      className="text-xs p-1 cursor-pointer rounded btn-style text-white"
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>{" "}
+                  <p className="text-sm mt-1">{comment?.comment}</p>
+                </div>
+              </div>
+            ))}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
