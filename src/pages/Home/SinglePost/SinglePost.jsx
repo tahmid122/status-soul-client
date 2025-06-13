@@ -1,7 +1,30 @@
 import React from "react";
+import { useState } from "react";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
-
-const SinglePost = ({ post }) => {
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
+const SinglePost = ({ post, handleDelete }) => {
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const [like, setLike] = useState(post?.likedBy.length);
+  const [isLiked, setIsLiked] = useState(post?.likedBy.includes(user.email));
+  const handleUpdate = () => {
+    console.log(post._id);
+  };
+  const handleLike = (id) => {
+    axiosSecure
+      .patch(`/posts/like?id=${id}&email=${user.email}`)
+      .then((res) => {
+        if (res.data.liked === true) {
+          setLike((prev) => prev + 1);
+          setIsLiked(true);
+        } else {
+          setLike((prev) => prev - 1);
+          setIsLiked(false);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <div className="bg-white rounded-md p-5">
       <div className="flex items-center justify-between">
@@ -15,19 +38,32 @@ const SinglePost = ({ post }) => {
             <small className="text-sm">{post.role}</small>
           </div>
         </div>
-        <button className="cursor-pointer">
-          <HiOutlineDotsHorizontal size={18} />
-        </button>
+        <details className="dropdown dropdown-end">
+          <summary className="btn">
+            <HiOutlineDotsHorizontal size={18} />
+          </summary>
+          <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+            <li>
+              <button onClick={handleUpdate}>Update</button>
+            </li>
+            <li>
+              <button onClick={() => handleDelete(post._id)}>Delete</button>
+            </li>
+          </ul>
+        </details>
       </div>
       <div className="w-full h-auto py-5 flex items-center justify-center text-center text-xl">
         <p className="my-3">{post.message}</p>
       </div>
       <div className="flex items-center gap-3 mt-5">
-        <span className="text-base font-semibold btn border-none bg-white hover:bg-gray-100">
-          👍Likes (56)
+        <span
+          onClick={() => handleLike(post._id)}
+          className="text-base font-semibold btn border-none bg-white hover:bg-gray-100"
+        >
+          👍{isLiked ? "Liked" : "Like"} ({like})
         </span>
         <span className="text-base font-semibold btn border-none bg-white hover:bg-gray-100">
-          💬Comments (12)
+          💬Comments ({post.comments.length})
         </span>
       </div>
       {/* <div className="mt-5 w-full space-y-5">

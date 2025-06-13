@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import SinglePost from "../../Home/SinglePost/SinglePost";
+import Swal from "sweetalert2";
 
 const Posts = () => {
   const { dbUser, user } = useAuth();
@@ -18,6 +19,8 @@ const Posts = () => {
     data.proImage = dbUser.proImage;
     data.role = dbUser.role;
     data.postedAt = new Date();
+    data.likedBy = [];
+    data.comments = [];
     axiosSecure
       .post(`/posts?email=${user.email}`, data)
       .then((res) => {
@@ -28,6 +31,34 @@ const Posts = () => {
         }
       })
       .catch((error) => console.log(error));
+  };
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete(`/posts?email=${user.email}&id=${id}`)
+          .then((res) => {
+            if (res.data) {
+              const filteredData = posts.filter((post) => post._id !== id);
+              setPosts(filteredData);
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+    });
   };
   useEffect(() => {
     axiosSecure
@@ -78,7 +109,7 @@ const Posts = () => {
       </div>
       <div className="mt-5 space-y-5">
         {posts.map((post) => (
-          <SinglePost key={post._id} post={post} />
+          <SinglePost key={post._id} post={post} handleDelete={handleDelete} />
         ))}
       </div>
       {/* modal */}
